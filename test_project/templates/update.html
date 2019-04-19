@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Update a post</title>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper ml-1">
+    <form method="post">{% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Save">
+    </form>
+</div>
+{% endblock %}

@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-adsfaasdfasdasdf
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Microblog</title>
+{% endblock %}
+
+{% block content %}
+{% for item in object_list %}
+    <div class="card mb-1">
+      <div class="card-body">
+        {{ item.message }}
+          <h6 class="card-subtitle mb-2 mt-1 text-muted">{{ item.is_created }}</h6>
+          <a href="{% url 'update' pk=item.pk %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'delete' pk=item.pk %}" class="btn btn-primary">Delete</a>
+      </div>
+    </div>
+{% endfor %}
+{% if paginator.num_pages > 1 %}
+    <div class="pagination ml-1">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; </a>
+                <a href="?page={{ page_obj.previous_page_number }}">&#8592;</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} из {{ paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">&#8594;</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+{% endblock %}
