@@ -5,17 +5,17 @@ from django.urls import reverse_lazy
 from .models import BlogModel
 from .forms import BlogForm
 
+from .mixins import AjaxableResponseMixin
+
 
 class BlogListView(ListView):
     model = BlogModel
     template_name = 'index.html'
-    paginate_by = 5
 
 
-class BlogCreateView(CreateView):
-    form_class = BlogForm
+class BlogCreateView(AjaxableResponseMixin, CreateView):
     model = BlogModel
-    template_name = 'create.html'
+    fields = ['message']
 
 
 class BlogUpdateView(UpdateView):
